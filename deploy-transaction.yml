@@ -42,17 +42,25 @@ stages:
       displayName: 'Install ReportGenerator tool'
       continueOnError: true
 
-    - script: '$(System.DefaultWorkingDirectory)/tools/reportgenerator.exe' "-reports:$(Agent.TempDirectory)/**/*.cobertura.xml" "-targetdir:$(Build.SourcesDirectory)/coverlet/reports" "-reporttypes:Cobertura;HtmlInline"
-      displayName: 'Config ReportGenerator tool'
-      continueOnError: true
+    #- script: tools/reportgenerator.exe "-reports:$(Agent.TempDirectory)/**/*.cobertura.xml" "-targetdir:$(Build.SourcesDirectory)/coverlet/reports" "-reporttypes:Cobertura;HtmlInline"
+    #  displayName: 'Config ReportGenerator tool'
+    #  continueOnError: true
 
+    #- task: DotNetCoreCLI@2
+    #  displayName: 'Config ReportGenerator tool'
+    #  inputs:
+    #    command: custom
+    #    custom: tool
+    #    arguments: 'run reportgenerator -reports:$(Agent.TempDirectory)/**/*.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:Cobertura;HtmlInline'
+        
     - task: DotNetCoreCLI@2
       displayName: 'Run unit tests - $(buildConfiguration)'
       inputs:
         command: 'test'
-        arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+        arguments: '--no-build --configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
         publishTestResults: true
         projects: '**/*.Tests.csproj'
+        continueOnError: true
 
     - task: DotNetCoreCLI@2
       displayName: 'Create code coverage report'
