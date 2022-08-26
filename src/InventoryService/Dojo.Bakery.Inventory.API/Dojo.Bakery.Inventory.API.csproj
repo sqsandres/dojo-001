@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9ad12cee-f1a2-47f4-8c97-56170f3312af</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ApplicationInsightsResourceId>/subscriptions/bc6fc020-fffa-4ace-9100-0065f1bce58d/resourceGroups/dv-east/providers/microsoft.insights/components/dv-east-appInsights</ApplicationInsightsResourceId>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Dojo001.p12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Dojo001.p12">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.4.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.10.0" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.3.0" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\Dojo.Bakery.BuildingBlocks.Commons\Dojo.Bakery.BuildingBlocks.Commons.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Dojo.Bakery.BuildingBlocks.CustomExceptions\Dojo.Bakery.BuildingBlocks.CustomExceptions.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Dojo.Bakery.BuildingBlocks.EventBus\Dojo.Bakery.BuildingBlocks.EventBus.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Dojo.Bakery.BuildingBlocks.WebCommons\Dojo.Bakery.BuildingBlocks.WebCommons.csproj" />
+    <ProjectReference Include="..\Dojo.Bakery.Inventory.Application\Dojo.Bakery.Inventory.Application.csproj" />
+    <ProjectReference Include="..\Dojo.Bakery.Inventory.Infra.Data\Dojo.Bakery.Inventory.Infra.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Extensions\" />
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="..\.dockerignore">
+      <DependentUpon>dockerfile</DependentUpon>
+    </None>
+  </ItemGroup>
+
+</Project>

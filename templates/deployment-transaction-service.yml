@@ -1,0 +1,70 @@
+parameters:  
+  environment: '' 
+  environmentVariableGroup: ''
+  azureSubscription: ''
+  appServiceName: ''
+  resourceGroupName: ''
+  vmImage: ''
+
+jobs:
+- deployment:  
+  pool:
+      vmImage: ${{parameters.vmImage}} 
+  displayName: Deploy ${{parameters.appServiceName}} to ${{parameters.environment}}
+  environment: ${{parameters.environment}}
+  variables:
+  - group: dojo.global
+  - group: ${{parameters.environmentVariableGroup}}
+  strategy:
+    runOnce:
+      deploy:
+        steps:                  
+              
+          - task: AzureRmWebAppDeployment@4
+            displayName: 'Deploy Transaction Service : ${{parameters.appServiceName}}'
+            inputs:
+              azureSubscription: ${{parameters.azureSubscription}}
+              WebAppName: ${{parameters.appServiceName}}
+              packageForLinux: '$(Pipeline.Workspace)/artifact/Dojo.Bakery.Transaction.API.zip'            
+
+          - task: AzureAppServiceSettings@1
+            displayName: 'Modify Transaction Service Settings: ${{parameters.appServiceName}}'
+            inputs:
+              azureSubscription: '${{parameters.azureSubscription}}'
+              appName: '${{parameters.appServiceName}}'
+              resourceGroupName: '${{parameters.resourceGroupName}}'              
+              appSettings: |
+                [
+                  {
+                    "name": "TransactionBusConnection",
+                    "value": "$(TransactionBusConnection)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "TransactionConnectionString",
+                    "value": "$(TransactionConnectionString)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "TransactionWebPath",
+                    "value": "$(TransactionWebPath)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ApplicationInsights__ConnectionString",
+                    "value": "$(AppInsights)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ConnectionStrings__TransactionConnectionString",
+                    "value": "$(TransactionConnectionString)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ASPNETCORE_ENVIRONMENT",
+                    "value": "$(ASPNETCORE_ENVIRONMENT)",
+                    "slotSetting": false
+                  }
+                ]
+
+          

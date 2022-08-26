@@ -1,0 +1,58 @@
+trigger:
+  branches:
+    include:
+    - 'main'         
+
+## Global
+variables:
+
+- group: dojo.global
+
+stages:
+- stage: build
+  displayName: build
+  jobs:
+  - job: build
+    pool:
+      vmImage: windows-latest
+    steps:       
+
+    - task: UseDotNet@2
+      inputs:
+        version: '6.0.x'
+        packageType: runtime
+        
+    - task: NuGetToolInstaller@1
+          
+    - task: DotNetCoreCLI@2
+      displayName: Build Inventory Service
+      inputs:
+        command: build
+        projects: 'src/InventoryService/Dojo.Bakery.Inventory.API/Dojo.Bakery.Inventory.API.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+        
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+        command: publish
+        publishWebProjects: True
+        arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+        zipAfterPublish: True
+    
+    - publish: '$(Build.ArtifactStagingDirectory)'
+      displayName: 'Publish Artifact'
+      artifact: artifact
+    
+## Dev environment deploy 
+- stage: Dev
+  dependsOn: build   
+  condition: and(succeeded('build'), startsWith(variables['build.sourceBranch'], 'refs/heads/main'))  
+  displayName: Deploy to Dev
+  jobs:
+  - template: templates/deployment-inventory-service.yml
+    parameters:
+      environmentVariableGroup: dojo.dev
+      environment: Development
+      azureSubscription: 'dojo-snc(1)(bc6fc020-fffa-4ace-9100-0065f1bce58d)'
+      appServiceName:  'dv-east-inventory-service-app-win'
+      vmImage: 'windows-latest'

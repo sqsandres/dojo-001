@@ -1,0 +1,233 @@
+<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ output extension=".cs" #>
+
+<#
+    string files="Store,Category,User,DocumentType";
+    var filesList = files.Split(',');
+    foreach(var file in filesList)
+    {
+        var fileCamel = file[0].ToString().ToLower()+file.Substring(1);
+#>
+using Dojo.Bakery.BuildingBlocks.Commons.Repositories;
+using Dojo.Bakery.Security.Domain;
+
+namespace Dojo.Bakery.Security.Infra.DataContract
+{
+    public interface I<#= file #>Repository : IGenericRepository<<#= file #>>
+    {
+
+    }
+}
+
+<#  
+        SaveOutput("I"+file+ "Repository.cs", "..\\Dojo.Bakery.Security.Infra.DataContract");
+#>
+using Dojo.Bakery.BuildingBlocks.Commons.Repositories;
+using Dojo.Bakery.Security.Domain;
+using Dojo.Bakery.Security.Infra.DataContract;
+
+namespace Dojo.Bakery.Security.Infra.Data.Repositories
+{
+    public class <#= file #>Repository : GenericRepository<<#= file #>>, I<#= file #>Repository
+    {
+        public <#= file #>Repository(ApplicationDbContext context) : base(context)
+        {
+        }
+    }
+}
+<#  
+        SaveOutput(file+ "Repository.cs", "..\\Dojo.Bakery.Security.Infra.Data\\Repositories");
+#>
+using Dojo.Bakery.Security.Application.DTOs.<#= file #>;
+using Dojo.Bakery.Security.Application.Queries.<#= file #>;
+using Dojo.Bakery.Security.Domain;
+using Dojo.Bakery.Security.Infra.DataContract;
+using MediatR;
+using Microsoft.Extensions.Logging;
+
+namespace Dojo.Bakery.Security.Application.Handlers.<#= file #>
+{
+    public class GetAll<#= file #>QueryHandler : IRequestHandler<GetAll<#= file #>Query, List<<#= file #>Dto>>
+    {
+        private readonly ILogger<GetAll<#= file #>QueryHandler> _logger;
+        private readonly I<#= file #>Repository _<#= fileCamel #>Repository;
+
+        public GetAll<#= file #>QueryHandler(ILogger<GetAll<#= file #>QueryHandler> logger, I<#= file #>Repository <#= fileCamel #>Repository)
+        {
+            _<#= fileCamel #>Repository = <#= fileCamel #>Repository;
+            _logger = logger;
+        }
+        
+        public async Task<List<<#= file #>Dto>> Handle(GetAll<#= file #>Query request, CancellationToken cancellationToken)
+        {
+            IEnumerable<<#= file #>> query = from i in await _<#= fileCamel #>Repository.GetEntitiesAsync()
+                                         orderby i.Name
+                                         select i;
+            List<<#= file #>Dto> list = new List<<#= file #>Dto>();
+            foreach (<#= file #> item in query.ToList())
+            {
+                list.Add(new <#= file #>Dto()
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                });
+            }
+            return list;
+        }
+    }
+}
+<#  
+        SaveOutput("GetAll" + file + "QueryHandler.cs", "..\\Dojo.Bakery.Security.Application\\Handlers\\" + file);
+#>
+using Dojo.Bakery.BuildingBlocks.Commons;
+using Dojo.Bakery.BuildingBlocks.Commons.Repositories;
+using Dojo.Bakery.Security.Application.Commands.<#= file #>;
+using Dojo.Bakery.Security.Domain;
+using Dojo.Bakery.Security.Infra.DataContract;
+using MediatR;
+using Microsoft.Extensions.Logging;
+
+namespace Dojo.Bakery.Security.Application.Handlers.<#= file #>
+{
+    public class Create<#= file #>CommandHandler : IRequestHandler<Create<#= file #>Command, Guid>
+    {
+        private readonly ILogger<Create<#= file #>CommandHandler> _logger;
+        private readonly I<#= file #>Repository _<#= fileCamel #>Repository;
+        private readonly IUnitOfWork _unitOfWork;
+        public Create<#= file #>CommandHandler(ILogger<Create<#= file #>CommandHandler> logger, I<#= file #>Repository <#= fileCamel #>Repository, IUnitOfWork unitOfWork)
+        {
+            _logger = logger;
+            _<#= fileCamel #>Repository = <#= fileCamel #>Repository;
+            _unitOfWork = unitOfWork;
+        }
+        public async Task<Guid> Handle(Create<#= file #>Command request, CancellationToken cancellationToken)
+        {
+            DomainExceptionValidation.When(request == null || request.Item == null, "Creation data is required");
+            <#= file #> <#= fileCamel #> = new <#= file #>(request.Item.Name);
+            await _<#= fileCamel #>Repository.CreateAsync(<#= fileCamel #>);
+            await _unitOfWork.CommitAsync();
+            return <#= fileCamel #>.Id;
+        }
+    }
+}
+<#  
+        SaveOutput("Create" + file + "CommandHandler.cs", "..\\Dojo.Bakery.Security.Application\\Handlers\\" + file);
+#>
+using System;
+
+namespace Dojo.Bakery.Security.Application.DTOs.<#= file #>
+{
+    public class <#= file #>Dto
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+    }
+}
+<#  
+        SaveOutput(file + "Dto.cs", "..\\Dojo.Bakery.Security.Application\\DTOs\\" + file);
+#>
+using Dojo.Bakery.Security.Application.DTOs.<#= file #>;
+using MediatR;
+
+namespace Dojo.Bakery.Security.Application.Queries.<#= file #>
+{
+    public class GetAll<#= file #>Query : IRequest<List<<#= file #>Dto>>
+    {
+    }
+}
+<#  
+        SaveOutput("GetAll" + file + "Queries.cs", "..\\Dojo.Bakery.Security.Application\\Queries\\" + file);
+#>
+using Dojo.Bakery.Security.Application.DTOs.<#= file #>;
+using MediatR;
+
+namespace Dojo.Bakery.Security.Application.Commands.<#= file #>
+{
+    public class Create<#= file #>Command : IRequest<Guid>
+    {
+        public <#= file #>Dto Item { get; set; }
+    }
+}
+<#  
+        SaveOutput("Create" + file + "Command.cs", "..\\Dojo.Bakery.Security.Application\\Commands\\" + file);
+#>
+using Dojo.Bakery.Security.Application.Queries.<#= file #>;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Dojo.Bakery.Security.API.Controllers
+{
+    [Produces("application/json")]
+    [Route("api/<#= file #>s")]
+    [ApiController]
+    public class <#= file #>Controller : BaseController
+    {
+        private readonly IMediator _mediator;
+        public <#= file #>Controller(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+        /// <summary>
+        ///     Action to retrieve all <#= file #>.
+        /// </summary>
+        /// <remarks>
+        /// Sample response:
+        ///
+        ///     GET /<#= file #>
+        ///     {
+        ///         "Id": "0070AE1A-5FA4-4AB2-8C45-41873B092B3B",
+        ///         "name": "XXXXX"
+        ///     }
+        ///
+        /// </remarks>
+        /// <returns>Returns the list of <#= file #>s</returns>
+        /// <response code="200">Returned if the get process works</response>
+        /// <response code="400">Returned if the model couldn't be parsed</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet]
+        public async Task<ActionResult<Response>> GetAll()
+        {
+            return Result(await _mediator.Send(new GetAll<#= file #>Query()));
+        }
+        /// <summary>
+        /// Action to create a <#= file #>
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// <response code="200">Returned if the get process works</response>
+        /// <response code="400">Returned if the model couldn't be parsed</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpPost]
+        public async Task<ActionResult<Response>> Create([FromBody]<#= file #>Dto data)
+        {
+            return Result(await _mediator.Send(new Create<#= file #>Command() { Item = data }));
+        }
+    }
+}
+<#  
+        SaveOutput(file + "Controller.cs", "..\\Dojo.Bakery.Security.API\\Controllers");
+    }
+#>
+<#+
+private void SaveOutput(string outputFileName, string folderName) {
+  string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+  string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+  File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
+  this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+  if(!Directory.Exists(Path.Combine(templateDirectory, folderName)))
+  {
+     Directory.CreateDirectory(Path.Combine(templateDirectory, folderName));
+  }
+  string outputFilePath2 = Path.Combine(templateDirectory, folderName+"\\"+outputFileName);
+  if(File.Exists(outputFilePath))
+  {
+     File.Move(outputFilePath, outputFilePath2);
+  }
+
+}
+#>

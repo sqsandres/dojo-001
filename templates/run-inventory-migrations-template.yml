@@ -1,0 +1,30 @@
+parameters:  
+  environment: '' 
+  environmentVariableGroup: ''
+  azureSubscription: ''    
+  vmImage: ''
+  dbContextFilename: ''
+
+jobs:
+- deployment:  
+  pool:
+      vmImage: ${{parameters.vmImage}} 
+  displayName: Run Migrations to ${{parameters.environment}}
+  environment: ${{parameters.environment}}
+  variables:
+  - group: dojo.dev
+  - group: ${{parameters.environmentVariableGroup}}    
+  strategy:
+    runOnce:
+      deploy:
+        steps:    
+          ## Inventory service run migrations
+          - task: SqlAzureDacpacDeployment@1
+            condition: succeededOrFailed()
+            displayName: run sql migrations
+            inputs:              
+              azureSubscription: '${{parameters.azureSubscription}}'
+              authenticationType: ConnectionString
+              connectionString: '$(TransactionConnectionString)'              
+              deployType: sqlTask
+              sqlFile: $(Pipeline.Workspace)/${{parameters.environment}}-Inventory/ApplicationDbContext.sql

@@ -1,0 +1,58 @@
+
+parameters:
+  environment: ''
+
+steps:
+    - task: UseDotNet@2
+      inputs:
+        version: '6.0.x'
+        packageType: runtime  
+    
+    - task: NuGetToolInstaller@1
+  
+    - task: DotNetCoreCLI@2
+      displayName: 'Install dotnet-ef'
+      inputs:
+        command: 'custom'
+        custom: 'tool'
+        arguments: 'install --global dotnet-ef'
+    - script: | 
+        set ASPNETCORE_ENVIRONMENT=$(ASPNETCORE_ENVIRONMENT)
+        set DefaultConnectionString=$(TransactionConnectionString)
+        set TransactionConnectionString=$(TransactionConnectionString)
+        set TransactionBusConnection=$(TransactionBusConnection)
+        set EventBusConnection=$(EventBusConnection)
+        set TransactionWebPath=$(TransactionWebPath)
+      displayName: 'Set Environment'
+    
+    ## Migrations tasks
+    ## Transaction Service
+    ## Generate migration
+    ## - task: pekspro.pekspro-efcore-migration-script-generator.efcore-migration-script-generator.efcore-migration-script-generator-task@0
+    ##   displayName: 'Transaction Service Migration'
+    ##   inputs:
+    ##     projectpath: src/TransactionService/Dojo.Bakery.Transaction.Infra.Data/Dojo.Bakery.Transaction.Infra.Data.csproj
+    ##     databasecontexts: ApplicationDbContext                          
+    ##     startupprojectpath: src/TransactionService/Dojo.Bakery.Transaction.API
+    ##     installdependencies: true
+    ##     targetfolder: '$(build.artifactstagingdirectory)/Transaction-migration' 
+    ##     
+    - task: efcore-migration-script-generator-task@1
+      displayName: 'Transaction Service Migration'
+      inputs:
+        projectpath: 'src/TransactionService/Dojo.Bakery.Transaction.Infra.Data/Dojo.Bakery.Transaction.Infra.Data.csproj'
+        databasecontexts: 'ApplicationDbContext'
+        startupprojectpath: 'src/TransactionService/Dojo.Bakery.Transaction.API/Dojo.Bakery.Transaction.API.csproj'
+        targetfolder: '$(build.artifactstagingdirectory)/transaction-migrations'
+        installdependencies: true
+        eftoolversion: '6.0.x'
+    ## Publish migrations
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Transaction Service Migrations'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)/transaction-migrations'
+        ArtifactName: '${{parameters.environment}}-Transaction'
+        publishLocation: 'Container'
+      condition: succeededOrFailed()
+
+        

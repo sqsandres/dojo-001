@@ -1,0 +1,70 @@
+parameters:  
+  environment: '' 
+  environmentVariableGroup: ''
+  azureSubscription: ''
+  appServiceName: ''
+  resourceGroupName: ''
+  vmImage: ''
+
+jobs:
+- deployment:  
+  pool:
+      vmImage: ${{parameters.vmImage}} 
+  displayName: Deploy ${{parameters.appServiceName}} to ${{parameters.environment}}
+  environment: ${{parameters.environment}}
+  variables:
+  - group: dojo.global
+  - group: ${{parameters.environmentVariableGroup}}
+  strategy:
+    runOnce:
+      deploy:
+        steps:                  
+              
+          - task: AzureRmWebAppDeployment@4
+            displayName: 'Deploy Inventory Service : ${{parameters.appServiceName}}'
+            inputs:
+              azureSubscription: ${{parameters.azureSubscription}}
+              WebAppName: ${{parameters.appServiceName}}
+              packageForLinux: '$(Pipeline.Workspace)/artifact/Dojo.Bakery.Inventory.API.zip'            
+
+          - task: AzureAppServiceSettings@1
+            displayName: 'Modify Inventory Service Settings: ${{parameters.appServiceName}}'
+            inputs:
+              azureSubscription: '${{parameters.azureSubscription}}'
+              appName: '${{parameters.appServiceName}}'
+              resourceGroupName: '${{parameters.resourceGroupName}}'              
+              appSettings: |
+                [
+                  {
+                    "name": "InventoryBusConnection",
+                    "value": "$(InventoryBusConnection)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "InventoryConnectionString",
+                    "value": "$(InventoryConnectionString)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "InventoryWebPath",
+                    "value": "$(InventoryWebPath)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ApplicationInsights__ConnectionString",
+                    "value": "$(AppInsights)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ConnectionStrings__InventoryConnectionString",
+                    "value": "$(InventoryConnectionString)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ASPNETCORE_ENVIRONMENT",
+                    "value": "$(ASPNETCORE_ENVIRONMENT)",
+                    "slotSetting": false
+                  }
+                ]
+
+          

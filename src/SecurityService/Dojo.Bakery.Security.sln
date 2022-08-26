@@ -1,0 +1,81 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32804.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dojo.Bakery.Security.API", "Dojo.Bakery.Security.API\Dojo.Bakery.Security.API.csproj", "{F07F99C4-7FAE-4CCC-BE89-2993B61FB38A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dojo.Bakery.Security.Domain", "Dojo.Bakery.Security.Domain\Dojo.Bakery.Security.Domain.csproj", "{F198A227-E419-47CE-B957-08CFFAF4D134}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dojo.Bakery.Security.Infra.DataContract", "Dojo.Bakery.Security.Infra.DataContract\Dojo.Bakery.Security.Infra.DataContract.csproj", "{275AF4DD-5C04-40E7-8E22-4EEBC25D0444}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dojo.Bakery.Security.Persistence.Infra.Data", "Dojo.Bakery.Security.Infra.Data\Dojo.Bakery.Security.Infra.Data.csproj", "{F51D066D-F92B-4D33-8AAB-7A9D94A80A4C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{01ACB99C-1D81-4E4B-916C-D65A0DFC73FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dojo.Bakery.BuildingBlocks.Commons", "..\BuildingBlocks\Dojo.Bakery.BuildingBlocks.Commons\Dojo.Bakery.BuildingBlocks.Commons.csproj", "{753F290E-5608-4A7D-940B-632BA1F109A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dojo.Bakery.BuildingBlocks.CustomExceptions", "..\BuildingBlocks\Dojo.Bakery.BuildingBlocks.CustomExceptions\Dojo.Bakery.BuildingBlocks.CustomExceptions.csproj", "{DF0ED6ED-806B-4B1A-A451-20CA3AB957BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dojo.Bakery.BuildingBlocks.EventBus", "..\BuildingBlocks\Dojo.Bakery.BuildingBlocks.EventBus\Dojo.Bakery.BuildingBlocks.EventBus.csproj", "{8AFF4DC8-AB7F-4B5E-9527-D5FC1484AC07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dojo.Bakery.BuildingBlocks.WebCommons", "..\BuildingBlocks\Dojo.Bakery.BuildingBlocks.WebCommons\Dojo.Bakery.BuildingBlocks.WebCommons.csproj", "{4481535C-C803-45E7-AC74-B6944E307DCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dojo.Bakery.Security.Application", "Dojo.Bakery.Security.Application\Dojo.Bakery.Security.Application.csproj", "{E4615FD2-5DB7-4633-8A46-12D10F71741F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F07F99C4-7FAE-4CCC-BE89-2993B61FB38A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F07F99C4-7FAE-4CCC-BE89-2993B61FB38A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F07F99C4-7FAE-4CCC-BE89-2993B61FB38A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F07F99C4-7FAE-4CCC-BE89-2993B61FB38A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F198A227-E419-47CE-B957-08CFFAF4D134}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F198A227-E419-47CE-B957-08CFFAF4D134}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F198A227-E419-47CE-B957-08CFFAF4D134}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F198A227-E419-47CE-B957-08CFFAF4D134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{275AF4DD-5C04-40E7-8E22-4EEBC25D0444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{275AF4DD-5C04-40E7-8E22-4EEBC25D0444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{275AF4DD-5C04-40E7-8E22-4EEBC25D0444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{275AF4DD-5C04-40E7-8E22-4EEBC25D0444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F51D066D-F92B-4D33-8AAB-7A9D94A80A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F51D066D-F92B-4D33-8AAB-7A9D94A80A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F51D066D-F92B-4D33-8AAB-7A9D94A80A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F51D066D-F92B-4D33-8AAB-7A9D94A80A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{753F290E-5608-4A7D-940B-632BA1F109A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{753F290E-5608-4A7D-940B-632BA1F109A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{753F290E-5608-4A7D-940B-632BA1F109A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{753F290E-5608-4A7D-940B-632BA1F109A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF0ED6ED-806B-4B1A-A451-20CA3AB957BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF0ED6ED-806B-4B1A-A451-20CA3AB957BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF0ED6ED-806B-4B1A-A451-20CA3AB957BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF0ED6ED-806B-4B1A-A451-20CA3AB957BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AFF4DC8-AB7F-4B5E-9527-D5FC1484AC07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AFF4DC8-AB7F-4B5E-9527-D5FC1484AC07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AFF4DC8-AB7F-4B5E-9527-D5FC1484AC07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AFF4DC8-AB7F-4B5E-9527-D5FC1484AC07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4481535C-C803-45E7-AC74-B6944E307DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4481535C-C803-45E7-AC74-B6944E307DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4481535C-C803-45E7-AC74-B6944E307DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4481535C-C803-45E7-AC74-B6944E307DCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4615FD2-5DB7-4633-8A46-12D10F71741F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4615FD2-5DB7-4633-8A46-12D10F71741F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4615FD2-5DB7-4633-8A46-12D10F71741F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4615FD2-5DB7-4633-8A46-12D10F71741F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{753F290E-5608-4A7D-940B-632BA1F109A6} = {01ACB99C-1D81-4E4B-916C-D65A0DFC73FB}
+		{DF0ED6ED-806B-4B1A-A451-20CA3AB957BF} = {01ACB99C-1D81-4E4B-916C-D65A0DFC73FB}
+		{8AFF4DC8-AB7F-4B5E-9527-D5FC1484AC07} = {01ACB99C-1D81-4E4B-916C-D65A0DFC73FB}
+		{4481535C-C803-45E7-AC74-B6944E307DCA} = {01ACB99C-1D81-4E4B-916C-D65A0DFC73FB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72BAB787-69B9-4718-A9A8-6D0B174EE569}
+	EndGlobalSection
+EndGlobal

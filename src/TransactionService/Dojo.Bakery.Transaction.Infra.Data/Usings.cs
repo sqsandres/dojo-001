@@ -1,0 +1,9 @@
+﻿global using Dojo.Bakery.BuildingBlocks.Commons.Repositories;
+global using Dojo.Bakery.Transaction.Domain;
+global using Dojo.Bakery.Transaction.Infra.DataContract;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Dojo.Bakery.BuildingBlocks.Commons;
+global using Microsoft.EntityFrameworkCore.ChangeTracking;
+global using Microsoft.Extensions.Logging;
+global using Dojo.Bakery.Transaction.Infra.Data.Configuration;

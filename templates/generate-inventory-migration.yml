@@ -1,0 +1,50 @@
+
+parameters:
+  environment: ''
+
+steps:
+    - task: UseDotNet@2
+      inputs:
+        version: '6.0.x'
+        packageType: runtime  
+    
+    - task: NuGetToolInstaller@1
+  
+    - task: DotNetCoreCLI@2
+      displayName: 'Install dotnet-ef'
+      inputs:
+        command: 'custom'
+        custom: 'tool'
+        arguments: 'install --global dotnet-ef'
+    - script: | 
+        set ASPNETCORE_ENVIRONMENT=$(ASPNETCORE_ENVIRONMENT)
+        set DefaultConnectionString=$(InventoryConnectionString)
+        set InventoryConnectionString=$(InventoryConnectionString)
+        set InventoryBusConnection=$(InventoryBusConnection)
+        set EventBusConnection=$(EventBusConnection)
+        set InventoryWebPath=$(InventoryWebPath)
+      displayName: 'Set Environment'
+    
+    ## Migrations tasks
+    ## Inventory Service
+    ## Generate migration    
+    - task: efcore-migration-script-generator-task@1
+      displayName: 'Inventory Service Migration'
+      inputs:
+        projectpath: 'src/InventoryService/Dojo.Bakery.Inventory.Infra.Data/Dojo.Bakery.Inventory.Infra.Data.csproj'
+        databasecontexts: 'ApplicationDbContext'
+        startupprojectpath: 'src/InventoryService/Dojo.Bakery.Inventory.API/Dojo.Bakery.Inventory.API.csproj'
+        targetfolder: '$(build.artifactstagingdirectory)/inventory-migrations'
+        installdependencies: true
+        eftoolversion: '6.0.x'
+
+    ## Publish migrations
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Inventory Service Migrations'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)/inventory-migrations'
+        ArtifactName: '${{parameters.environment}}-inventory'
+        publishLocation: 'Container'
+      condition: succeededOrFailed()
+
+        
