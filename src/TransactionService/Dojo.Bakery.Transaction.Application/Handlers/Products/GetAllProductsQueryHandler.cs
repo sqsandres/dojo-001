@@ -15,7 +15,7 @@ public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, L
                                      orderby i.Name
                                      select i;
 
-        DomainExceptionValidation.When(query == null, "There is not products");
+        DomainExceptionValidation.When(query.Count() <= 0 || query == null, "There is not products");
 
         List<ProductDto> list = new List<ProductDto>();
         foreach (Product item in query.ToList())

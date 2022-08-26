@@ -31,9 +31,14 @@ git clone https://carlosandresnino@dev.azure.com/carlosandresnino/dojo_01/_git/d
 
 ## Sites
 APP DEV:
-https://dv-east-identity-service-app.azurewebsites.net
-https://dv-east-inventory-service-app.azurewebsites.net
-https://dv-east-transaction-service-app.azurewebsites.net
+https://dv-east-ui-app-win.azurewebsites.net/
+
+https://dv-east-security-service-app-win.azurewebsites.net
+
+https://dv-east-inventory-service-app-win.azurewebsites.net
+
+https://dv-east-transaction-service-app-win.azurewebsites.net
+
 
 ## Styling Guide
 [style guide](./STYLE-GUIDE.md).

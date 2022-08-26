@@ -25,6 +25,6 @@ jobs:
             inputs:              
               azureSubscription: '${{parameters.azureSubscription}}'
               authenticationType: ConnectionString
-              connectionString: '$(InventoryConnectionString)'              
+              connectionString: '$(TransactionConnectionString)'              
               deployType: sqlTask
               sqlFile: $(Pipeline.Workspace)/${{parameters.environment}}-Inventory/ApplicationDbContext.sql

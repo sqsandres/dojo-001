@@ -13,7 +13,7 @@ public class GetSupplierByIdQueryHandler : IRequestHandler<GetSupplierByIdQuery,
 
     public async Task<SupplierDto> Handle(GetSupplierByIdQuery request, CancellationToken cancellationToken)
     {
-        Supplier query = await _supplierRepository.GetByIdAsync(request.Id);
+        Client query = await _supplierRepository.GetByIdAsync(request.Id);
 
         DomainExceptionValidation.When(query == null, "Supplier not found");
 

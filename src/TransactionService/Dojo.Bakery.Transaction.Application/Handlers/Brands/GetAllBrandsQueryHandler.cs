@@ -19,7 +19,7 @@ public class GetAllBrandsQueryHandler : IRequestHandler<GetAllBrandsQuery, List<
         IEnumerable<Brand> query = from i in await _brandRepository.GetEntitiesAsync()
                                       orderby i.Name
                                       select i;
-        DomainExceptionValidation.When(query == null, "There is not brands");
+        DomainExceptionValidation.When(query.Count() <= 0 || query == null, "There is not brands");
         List<BrandDto> brands = new List<BrandDto>();
         foreach (Brand item in query)
         {

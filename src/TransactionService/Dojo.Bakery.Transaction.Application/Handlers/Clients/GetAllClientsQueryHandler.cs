@@ -25,7 +25,7 @@ public class GetAllClientsQueryHandler : IRequestHandler<GetAllClientsQuery, Lis
             {
                 Id = item.Id,
                 Name = item.Name,
-                Documento = item.Documento,
+                Documento = item.DocumentId,
                 DocumentTypeId = item.DocumentTypeId,
                 Address = item.Address,
                 PhoneNumber = item.PhoneNumber,

@@ -1,9 +1,4 @@
-﻿using Dojo.Bakery.BuildingBlocks.Commons;
-using Dojo.Bakery.BuildingBlocks.Commons.Repositories;
-using Dojo.Bakery.Inventory.Application.Commands.Inventory;
-using Dojo.Bakery.Inventory.Infra.DataContract;
-using MediatR;
-using Microsoft.Extensions.Logging;
+﻿using Dojo.Bakery.Inventory.Application.Commands.Inventory;
 
 namespace Dojo.Bakery.Inventory.Application.Handlers.Inventory
 {

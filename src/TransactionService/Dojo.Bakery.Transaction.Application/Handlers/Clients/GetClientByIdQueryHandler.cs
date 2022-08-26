@@ -20,7 +20,7 @@ public class GetClientByIdQueryHandler : IRequestHandler<GetClientByIdQuery, Cli
         {
             Id = query.Id,
             Name = query.Name,
-            Documento = query.Documento,
+            Documento = query.DocumentId,
             DocumentTypeId = query.DocumentTypeId,
             Address = query.Address,
             PhoneNumber = query.PhoneNumber,

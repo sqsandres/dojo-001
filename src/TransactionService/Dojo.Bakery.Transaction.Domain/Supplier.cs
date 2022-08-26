@@ -21,6 +21,10 @@ public class Supplier : AggregateRoot
         Id = IdentityGenerator.NewSequentialGuid();        
     }
 
+    public void Update(string name, string documentId, Guid documentType, string address, string phoneNumber, string email)
+    {
+        ValidateDomain(name, documentId, documentType, address, phoneNumber, email);
+    }
     private void ValidateDomain(string name, string documentId, Guid documentTypeId, string address, string phoneNumber, string email)
     {
         DomainExceptionValidation.When(string.IsNullOrEmpty(name), DomainExceptionValidation.RequiredValueMessage,nameof(name));

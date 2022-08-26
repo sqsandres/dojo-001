@@ -12,8 +12,8 @@ namespace Dojo.Bakery.Transaction.Domain
 
         private void ValidateDomain(Guid vendorId, decimal total, string invoiceNumber, DateTime deliveryDate)
         {
-            DomainExceptionValidation.When(string.IsNullOrEmpty(invoiceNumber), "Invalid invoice number. invoice number is required");
-            DomainExceptionValidation.When(vendorId == Guid.Empty, "Invalid vendorId. vendorId is required");
+            DomainExceptionValidation.When(string.IsNullOrEmpty(invoiceNumber), DomainExceptionValidation.RequiredValueMessage, nameof(invoiceNumber));
+            DomainExceptionValidation.When(vendorId == Guid.Empty, DomainExceptionValidation.RequiredValueMessage, nameof(vendorId));
             DomainExceptionValidation.When(total < 1, "Invalid total. The total must be greater than 0");
             //DomainExceptionValidation.When(details != null && details.Any(), "there must be at least one product in the order");
             VendorId = vendorId;

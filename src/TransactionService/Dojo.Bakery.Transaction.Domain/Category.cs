@@ -10,4 +10,10 @@ public class Category : AggregateRoot
         Name = name;
         Id = IdentityGenerator.NewSequentialGuid();
     }
+
+    public void ChangeName(string name)
+    {
+        DomainExceptionValidation.When(string.IsNullOrEmpty(name), DomainExceptionValidation.RequiredValueMessage, nameof(name));
+        Name = name;
+    }
 }

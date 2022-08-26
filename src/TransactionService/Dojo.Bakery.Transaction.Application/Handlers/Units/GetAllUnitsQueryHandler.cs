@@ -18,7 +18,7 @@ public class GetAllUnitsQueryHandler : IRequestHandler<GetAllUnitsQuery, List<Un
                                          orderby i.Name
                                          select i;
 
-        DomainExceptionValidation.When(query == null, "There is not Units");
+        DomainExceptionValidation.When(query.Count() <= 0 || query == null, "There is not Units");
 
         List<UnitDto> units = new List<UnitDto>();
         foreach (Domain.Unit item in query.ToList())

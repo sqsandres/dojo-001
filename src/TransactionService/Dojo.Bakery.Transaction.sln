@@ -23,6 +23,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dojo.Bakery.BuildingBlocks.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dojo.Bakery.Transaction.Infra.DataContract", "Dojo.Bakery.Transaction.Infra.DataContract\Dojo.Bakery.Transaction.Infra.DataContract.csproj", "{90128A10-518B-4626-826D-CB9C76959A69}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{FFA91320-C3DB-4C24-96F7-07167C637DD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dojo.Bakery.Transaction.Domain.Test", "..\..\test\Transaction\Domain\Dojo.Bakery.Transaction.Domain.Test\Dojo.Bakery.Transaction.Domain.Test.csproj", "{444645B5-C0FF-474F-B63E-5DA87C53BC54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dojo.Bakery.Transaction.Application.Test", "..\..\test\Transaction\Application\Dojo.Bakery.Transaction.Application.Test\Dojo.Bakery.Transaction.Application.Test.csproj", "{22C05ECB-570A-4344-ADC5-DABF1963A84B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +71,14 @@ Global
 		{90128A10-518B-4626-826D-CB9C76959A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90128A10-518B-4626-826D-CB9C76959A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90128A10-518B-4626-826D-CB9C76959A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{444645B5-C0FF-474F-B63E-5DA87C53BC54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{444645B5-C0FF-474F-B63E-5DA87C53BC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{444645B5-C0FF-474F-B63E-5DA87C53BC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{444645B5-C0FF-474F-B63E-5DA87C53BC54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22C05ECB-570A-4344-ADC5-DABF1963A84B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C05ECB-570A-4344-ADC5-DABF1963A84B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C05ECB-570A-4344-ADC5-DABF1963A84B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22C05ECB-570A-4344-ADC5-DABF1963A84B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +88,8 @@ Global
 		{05651C1A-E671-4FD1-9794-DE3751BC9C88} = {C26D451B-B512-4225-B714-07E47B33E4E7}
 		{88EB8948-672E-403C-967B-26C8004628C9} = {C26D451B-B512-4225-B714-07E47B33E4E7}
 		{F2CA5348-25D7-4509-A698-9A977BC18DF9} = {C26D451B-B512-4225-B714-07E47B33E4E7}
+		{444645B5-C0FF-474F-B63E-5DA87C53BC54} = {FFA91320-C3DB-4C24-96F7-07167C637DD2}
+		{22C05ECB-570A-4344-ADC5-DABF1963A84B} = {FFA91320-C3DB-4C24-96F7-07167C637DD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B81F667A-7B52-4789-B42D-A2D0A178CFD9}

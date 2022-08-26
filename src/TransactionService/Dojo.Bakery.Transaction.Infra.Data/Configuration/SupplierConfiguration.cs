@@ -1,9 +1,9 @@
 ﻿
 namespace Dojo.Bakery.Transaction.Infra.Data.Configuration;
 
-public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
+public class SupplierConfiguration : IEntityTypeConfiguration<Client>
 {
-    public void Configure(EntityTypeBuilder<Supplier> builder)
+    public void Configure(EntityTypeBuilder<Client> builder)
     {
         builder.ConfigureBase();
         builder.ConfigureAuditable();

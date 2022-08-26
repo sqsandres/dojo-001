@@ -16,7 +16,7 @@ public class RemoveSupplierCommandHandler : IRequestHandler<RemoveSupplierComman
     public async Task<Guid> Handle(RemoveSupplierCommand request, CancellationToken cancellationToken)
     {
         DomainExceptionValidation.When(request == null || request.Id == null, "Supplier data is required");
-        Supplier supplier = await _supplierRepository.GetByIdAsync(request.Id);
+        Client supplier = await _supplierRepository.GetByIdAsync(request.Id);
 
         if (supplier == null) DomainExceptionValidation.When(supplier == null, "Supplier not found");
 

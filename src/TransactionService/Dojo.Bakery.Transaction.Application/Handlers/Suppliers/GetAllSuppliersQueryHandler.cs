@@ -13,13 +13,13 @@ public class GetAllSuppliersQueryHandler : IRequestHandler<GetAllSuppliersQuery,
 
     public async Task<List<SupplierDto>> Handle(GetAllSuppliersQuery request, CancellationToken cancellationToken)
     {
-        IEnumerable<Supplier> query = from spl in await _supplierRepository.GetEntitiesAsync()
+        IEnumerable<Client> query = from spl in await _supplierRepository.GetEntitiesAsync()
                                         orderby spl.Name
                                         select spl;
         DomainExceptionValidation.When(query == null, "There is not Suppliers");
 
         List<SupplierDto> suppliers = new List<SupplierDto>();
-        foreach (Supplier item in query)
+        foreach (Client item in query)
         {
             suppliers.Add(new SupplierDto
             {

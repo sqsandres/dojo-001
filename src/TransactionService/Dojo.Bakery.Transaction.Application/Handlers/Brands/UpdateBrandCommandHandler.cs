@@ -16,8 +16,9 @@ public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, Gui
     public async Task<Guid> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
     {
         DomainExceptionValidation.When(request == null || request.Item == null, "Update Brand data is required");
-        Brand brand = new(request.Item.Name);
-        await _brandRepository.CreateAsync(brand);
+        Brand brand = await _brandRepository.GetByIdAsync(request.Item.Id);
+        brand.ChangeName(request.Item.Name);
+        await _brandRepository.UpdateAsync(brand);
         await _unitOfWork.CommitAsync();
         return brand.Id;
     }

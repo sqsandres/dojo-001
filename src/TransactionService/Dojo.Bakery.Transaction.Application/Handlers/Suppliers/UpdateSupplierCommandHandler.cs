@@ -17,7 +17,7 @@ public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierComman
     public async Task<Guid> Handle(UpdateSupplierCommand request, CancellationToken cancellationToken)
     {
         DomainExceptionValidation.When(request == null || request.Item == null, "Supplier Creation data is required");
-        Supplier supplier = new Supplier(
+        Client supplier = new Client(
             request.Item.Name,
             request.Item.DocumentId,
             request.Item.DocumentTypeId,

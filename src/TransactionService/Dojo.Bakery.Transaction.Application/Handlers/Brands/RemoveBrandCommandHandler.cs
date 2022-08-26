@@ -15,7 +15,7 @@ public class RemoveBrandCommandHandler : IRequestHandler<RemoveBrandCommand, Gui
 
     public async Task<Guid> Handle(RemoveBrandCommand request, CancellationToken cancellationToken)
     {
-        DomainExceptionValidation.When(request == null || request.Id == null, "Brand data is required");
+        DomainExceptionValidation.When(request == null || request.Id == Guid.Empty, "Brand data is required");
         Brand brand = await _brandRepository.GetByIdAsync(request.Id);
 
         if (brand == null) DomainExceptionValidation.When(brand == null, "Brand not found");
