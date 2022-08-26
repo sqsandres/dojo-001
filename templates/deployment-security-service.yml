@@ -1,0 +1,105 @@
+parameters:  
+  environment: '' 
+  environmentVariableGroup: ''
+  azureSubscription: ''
+  appServiceName: ''
+  resourceGroupName: ''
+  vmImage: ''
+
+jobs:
+- deployment:  
+  pool:
+      vmImage: ${{parameters.vmImage}} 
+  displayName: Deploy ${{parameters.appServiceName}} to ${{parameters.environment}}
+  environment: ${{parameters.environment}}
+  variables:
+  - group: dojo.global
+  - group: ${{parameters.environmentVariableGroup}}
+  strategy:
+    runOnce:
+      deploy:
+        steps:                  
+              
+          - task: AzureRmWebAppDeployment@4
+            displayName: 'Deploy Security Service : ${{parameters.appServiceName}}'
+            inputs:
+              azureSubscription: ${{parameters.azureSubscription}}
+              WebAppName: ${{parameters.appServiceName}}
+              packageForLinux: '$(Pipeline.Workspace)/artifact/Dojo.Bakery.Security.API.zip'            
+
+          - task: AzureAppServiceSettings@1
+            displayName: 'Modify Security Service Settings: ${{parameters.appServiceName}}'
+            inputs:
+              azureSubscription: '${{parameters.azureSubscription}}'
+              appName: '${{parameters.appServiceName}}'
+              resourceGroupName: '${{parameters.resourceGroupName}}'              
+              appSettings: |
+                [
+                  {
+                    "name": "SecurityBusConnection",
+                    "value": "$(SecurityBusConnection)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "SecurityConnectionString",
+                    "value": "$(SecurityConnectionString)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "SecurityWebPath",
+                    "value": "$(SecurityWebPath)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ApplicationInsights__ConnectionString",
+                    "value": "$(AppInsights)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ConnectionStrings__SecurityConnectionString",
+                    "value": "$(SecurityConnectionString)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ASPNETCORE_ENVIRONMENT",
+                    "value": "$(ASPNETCORE_ENVIRONMENT)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "AzureAD_Authority",
+                    "value": "$(AzureAD_Authority)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "AzureAD_ClientId",
+                    "value": "$(AzureAD_ClientId)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "AzureAD_Prompt",
+                    "value": "$(AzureAD_Prompt)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "AzureAD_ClientSecret",
+                    "value": "$(AzureAD_ClientSecret)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "AzureAD_ResponseType",
+                    "value": "$(AzureAD_ResponseType)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "AzureAD_AuthorityDomain",
+                    "value": "$(AzureAD_AuthorityDomain)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "AzureAD_PublicKey",
+                    "value": "$(AzureAD_PublicKey)",
+                    "slotSetting": false
+                  }
+                ]
+
+          
