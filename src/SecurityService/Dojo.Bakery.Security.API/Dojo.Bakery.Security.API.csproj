@@ -18,18 +18,10 @@
 	
 <ItemGroup>
   <None Remove="Dojo001.p12" />
-  <None Remove="DojoServer.p12" />
-  <None Remove="DojoServer.pfx" />
 </ItemGroup>
 	
 <ItemGroup>
   <EmbeddedResource Include="Dojo001.p12">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </EmbeddedResource>
-  <EmbeddedResource Include="DojoServer.p12">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </EmbeddedResource>
-  <EmbeddedResource Include="DojoServer.pfx">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </EmbeddedResource>
 </ItemGroup>
