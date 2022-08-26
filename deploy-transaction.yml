@@ -60,7 +60,6 @@ stages:
         arguments: '--no-build --configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
         publishTestResults: true
         projects: '**/*.Tests.csproj'
-        continueOnError: true
 
     - task: DotNetCoreCLI@2
       displayName: 'Create code coverage report'
@@ -68,6 +67,7 @@ stages:
         command: custom
         custom: tool
         arguments: 'run reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines'
+        continueOnError: true
 
     - task: PublishCodeCoverageResults@1
       displayName: 'Publish code coverage report'
